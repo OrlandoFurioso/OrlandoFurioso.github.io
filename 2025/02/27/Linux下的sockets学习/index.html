@@ -16,30 +16,31 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"orlandofurioso.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":"default","style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"orlandofurioso.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":"default","style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="Socket基础概念Socket，又称套接字，是Linux跨进程通信方式的一种。其既可以实现同一台主机内跨进程通信，也可以实现不同主机之间的跨进程通信。根据通信域的不同可以划分为两种：Unix domain socket和Internet domain socket 网络层的“ip地址”可以唯一标识网络中的主机，而传输层的“端口”可以唯一标识主机中的应用程(进程）。这样利用三元组（ip地址,协议,">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux下的sockets学习">
-<meta property="og:url" content="http://orlandofurioso.github.io/2025/02/23/Linux%E4%B8%8B%E7%9A%84sockets%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:url" content="http://orlandofurioso.github.io/2025/02/27/Linux%E4%B8%8B%E7%9A%84sockets%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="OrlandoFurioso的个人博客">
 <meta property="og:description" content="Socket基础概念Socket，又称套接字，是Linux跨进程通信方式的一种。其既可以实现同一台主机内跨进程通信，也可以实现不同主机之间的跨进程通信。根据通信域的不同可以划分为两种：Unix domain socket和Internet domain socket 网络层的“ip地址”可以唯一标识网络中的主机，而传输层的“端口”可以唯一标识主机中的应用程(进程）。这样利用三元组（ip地址,协议,">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://orlandofurioso.github.io/2025/02/23/Linux%E4%B8%8B%E7%9A%84sockets%E5%AD%A6%E4%B9%A0/%E8%BF%9E%E6%8E%A5%E5%BB%BA%E7%AB%8B%E5%92%8C%E9%80%9A%E4%BF%A1%E6%95%B4%E4%BD%93%E6%B5%81%E7%A8%8B.png">
-<meta property="og:image" content="http://orlandofurioso.github.io/2025/02/23/Linux%E4%B8%8B%E7%9A%84sockets%E5%AD%A6%E4%B9%A0/%E4%B8%BB%E6%9C%BA%E5%AD%97%E8%8A%82%E5%BA%8F%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AD%97%E8%8A%82%E5%BA%8F.png">
-<meta property="article:published_time" content="2025-02-23T02:13:14.644Z">
-<meta property="article:modified_time" content="2025-02-23T02:13:14.644Z">
+<meta property="og:image" content="http://orlandofurioso.github.io/2025/02/27/Linux%E4%B8%8B%E7%9A%84sockets%E5%AD%A6%E4%B9%A0/%E8%BF%9E%E6%8E%A5%E5%BB%BA%E7%AB%8B%E5%92%8C%E9%80%9A%E4%BF%A1%E6%95%B4%E4%BD%93%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="http://orlandofurioso.github.io/2025/02/27/Linux%E4%B8%8B%E7%9A%84sockets%E5%AD%A6%E4%B9%A0/%E4%B8%BB%E6%9C%BA%E5%AD%97%E8%8A%82%E5%BA%8F%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AD%97%E8%8A%82%E5%BA%8F.png">
+<meta property="article:published_time" content="2025-02-27T09:06:49.245Z">
+<meta property="article:modified_time" content="2025-02-27T09:06:49.245Z">
 <meta property="article:author" content="OrlandoFurioso">
-<meta property="article:tag" content="test">
+<meta property="article:tag" content="network_programming">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://orlandofurioso.github.io/2025/02/23/Linux%E4%B8%8B%E7%9A%84sockets%E5%AD%A6%E4%B9%A0/%E8%BF%9E%E6%8E%A5%E5%BB%BA%E7%AB%8B%E5%92%8C%E9%80%9A%E4%BF%A1%E6%95%B4%E4%BD%93%E6%B5%81%E7%A8%8B.png">
+<meta name="twitter:image" content="http://orlandofurioso.github.io/2025/02/27/Linux%E4%B8%8B%E7%9A%84sockets%E5%AD%A6%E4%B9%A0/%E8%BF%9E%E6%8E%A5%E5%BB%BA%E7%AB%8B%E5%92%8C%E9%80%9A%E4%BF%A1%E6%95%B4%E4%BD%93%E6%B5%81%E7%A8%8B.png">
 
 
-<link rel="canonical" href="http://orlandofurioso.github.io/2025/02/23/Linux%E4%B8%8B%E7%9A%84sockets%E5%AD%A6%E4%B9%A0/">
+<link rel="canonical" href="http://orlandofurioso.github.io/2025/02/27/Linux%E4%B8%8B%E7%9A%84sockets%E5%AD%A6%E4%B9%A0/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://orlandofurioso.github.io/2025/02/23/Linux%E4%B8%8B%E7%9A%84sockets%E5%AD%A6%E4%B9%A0/","path":"2025/02/23/Linux下的sockets学习/","title":"Linux下的sockets学习"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://orlandofurioso.github.io/2025/02/27/Linux%E4%B8%8B%E7%9A%84sockets%E5%AD%A6%E4%B9%A0/","path":"2025/02/27/Linux下的sockets学习/","title":"Linux下的sockets学习"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>Linux下的sockets学习 | OrlandoFurioso的个人博客</title>
@@ -90,7 +91,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
   </ul>
 </nav>
 
@@ -121,6 +122,8 @@
 
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="OrlandoFurioso"
+      src="/uploads/hina1.jpg">
   <p class="site-author-name" itemprop="name">OrlandoFurioso</p>
   <div class="site-description" itemprop="description">记录个人关于网络安全学习，Linux学习相关的一些随笔</div>
 </div>
@@ -131,6 +134,11 @@
           <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
@@ -166,10 +174,10 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://orlandofurioso.github.io/2025/02/23/Linux%E4%B8%8B%E7%9A%84sockets%E5%AD%A6%E4%B9%A0/">
+    <link itemprop="mainEntityOfPage" href="http://orlandofurioso.github.io/2025/02/27/Linux%E4%B8%8B%E7%9A%84sockets%E5%AD%A6%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/uploads/hina1.jpg">
       <meta itemprop="name" content="OrlandoFurioso">
     </span>
 
@@ -195,7 +203,16 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-02-23 10:13:14" itemprop="dateCreated datePublished" datetime="2025-02-23T10:13:14+08:00">2025-02-23</time>
+      <time title="创建时间：2025-02-27 17:06:49" itemprop="dateCreated datePublished" datetime="2025-02-27T17:06:49+08:00">2025-02-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%AE%9E%E8%B7%B5/" itemprop="url" rel="index"><span itemprop="name">网络编程实践</span></a>
+        </span>
     </span>
 
   
@@ -210,7 +227,9 @@
     <div class="post-body" itemprop="articleBody"><h1 id="Socket基础概念"><a href="#Socket基础概念" class="headerlink" title="Socket基础概念"></a>Socket基础概念</h1><p>Socket，又称套接字，是Linux跨进程通信方式的一种。其既可以实现同一台主机内跨进程通信，也可以实现不同主机之间的跨进程通信。<strong>根据通信域的不同可以划分为两种：Unix domain socket和Internet domain socket</strong></p>
 <p>网络层的“ip地址”可以唯一标识网络中的主机，而传输层的“端口”可以唯一标识主机中的应用程(进程）。这样利用三元组（<strong>ip地址,协议, 端口</strong>）就可以标识网络的进程了，网络中的进程通信就可以利用这个标志与其它进程进行交互。<strong>Socket是应用层与TCP&#x2F;IP协议族通信的中间软件抽象层</strong></p>
 <p>在因特网通信过程中：应用程序要为因特网通信而创建一个套接字（socket）时，操作系统就返回一个<strong>小整数</strong>作为描述符（descriptor）来标识这个套接字。然后应用程序以该描述符作为传递参数，通过调用相应函数（如read、write、close等）来完成某种操作（如从套接字中读取或写入数据）。</p>
-<h1 id="Socket操作API函数"><a href="#Socket操作API函数" class="headerlink" title="Socket操作API函数"></a>Socket操作API函数</h1><img src="/2025/02/23/Linux%E4%B8%8B%E7%9A%84sockets%E5%AD%A6%E4%B9%A0/%E8%BF%9E%E6%8E%A5%E5%BB%BA%E7%AB%8B%E5%92%8C%E9%80%9A%E4%BF%A1%E6%95%B4%E4%BD%93%E6%B5%81%E7%A8%8B.png" class="">
+<span id="more"></span>
+
+<h1 id="Socket操作API函数"><a href="#Socket操作API函数" class="headerlink" title="Socket操作API函数"></a>Socket操作API函数</h1><img data-src="/2025/02/27/Linux%E4%B8%8B%E7%9A%84sockets%E5%AD%A6%E4%B9%A0/%E8%BF%9E%E6%8E%A5%E5%BB%BA%E7%AB%8B%E5%92%8C%E9%80%9A%E4%BF%A1%E6%95%B4%E4%BD%93%E6%B5%81%E7%A8%8B.png" class="">
 
 <p>接下来站在整体层面上，对Socket函数进行介绍：</p>
 <p><strong>getaddrinfo函数利用DNS进行域名和IP的转换操作</strong>，其输入为一个域名，输出为一系列潜在的匹配IP地址。</p>
@@ -274,7 +293,7 @@
 
 <p>ntohs将无符号转换短字符从网络字节顺序到主机字节顺序<br>ntohl将无符号转换整数从网络字节顺序到主机字节顺序<br>INADDR_ANY指定地址为0.0.0.0地址,表示监听所有的IP地址</p>
 <p>netlong:一个以网络字节顺序表达的32位数<br>netshort:一个以网络字节顺序表达的16位数</p>
-<img src="/2025/02/23/Linux%E4%B8%8B%E7%9A%84sockets%E5%AD%A6%E4%B9%A0/%E4%B8%BB%E6%9C%BA%E5%AD%97%E8%8A%82%E5%BA%8F%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AD%97%E8%8A%82%E5%BA%8F.png" class="">
+<img data-src="/2025/02/27/Linux%E4%B8%8B%E7%9A%84sockets%E5%AD%A6%E4%B9%A0/%E4%B8%BB%E6%9C%BA%E5%AD%97%E8%8A%82%E5%BA%8F%E4%B8%8E%E7%BD%91%E7%BB%9C%E5%AD%97%E8%8A%82%E5%BA%8F.png" class="">
 <p>一般来说，我们使用的主机字节序为小端字节序，网络字节序为大端字节序。我们常用的IP地址和端口直接写成二进制就是主机字节序，调换位置后变为网络字节序。</p>
 <h3 id="inet-aton和inet-ntoa函数"><a href="#inet-aton和inet-ntoa函数" class="headerlink" title="inet_aton和inet_ntoa函数"></a>inet_aton和inet_ntoa函数</h3><p><strong>作用：inet_aton函数将点十进制字符串转换成网络地址，inet_ntoa函数将网络地址转换成点十进制字符串格式</strong></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">inet_aton</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *string, <span class="keyword">struct</span> in_addr *addr)</span></span>;</span><br><span class="line"><span class="comment">//将字符串表示的网络地址转换为该地址数值的整数表示，返回的数字总是按照网络字节顺序的</span></span><br></pre></td></tr></table></figure>
@@ -356,7 +375,7 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/test/" rel="tag"># test</a>
+              <a href="/tags/network-programming/" rel="tag"># network_programming</a>
           </div>
 
         
@@ -365,8 +384,8 @@
             <div class="post-nav-item">
             </div>
             <div class="post-nav-item">
-                <a href="/2025/02/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0-%E5%85%B6%E4%B8%80/" rel="next" title="计算机网络课程笔记(一)">
-                  计算机网络课程笔记(一) <i class="fa fa-angle-right"></i>
+                <a href="/2025/02/27/Prompt-engineering%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/" rel="next" title="Prompt engineering入门学习">
+                  Prompt engineering入门学习 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
@@ -422,12 +441,16 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
 
   
 
 
 
+  <script src="/js/third-party/fancybox.js"></script>
 
 
 

@@ -16,8 +16,9 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"orlandofurioso.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":"default","style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"orlandofurioso.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":"default","style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="Prompt engineering(提示工程)，是调整优化提示词(prompt)，以引导大模型生成预期的回答的一项技术。对于同样的大模型，可以通过利用prompt engineering清晰地描述问题，明确解决问题的步骤，规范回答格式的方式，提高回答的质量。场景不同，分析的问题不同，使用的prompt engineering策略也不尽相同。以下是常见的优化提示词的思路，可供参考 1.给出清晰的指">
 <meta property="og:type" content="article">
@@ -26,8 +27,8 @@
 <meta property="og:site_name" content="OrlandoFurioso的个人博客">
 <meta property="og:description" content="Prompt engineering(提示工程)，是调整优化提示词(prompt)，以引导大模型生成预期的回答的一项技术。对于同样的大模型，可以通过利用prompt engineering清晰地描述问题，明确解决问题的步骤，规范回答格式的方式，提高回答的质量。场景不同，分析的问题不同，使用的prompt engineering策略也不尽相同。以下是常见的优化提示词的思路，可供参考 1.给出清晰的指">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-02-27T07:59:38.395Z">
-<meta property="article:modified_time" content="2025-02-27T07:59:38.395Z">
+<meta property="article:published_time" content="2025-02-27T09:07:06.238Z">
+<meta property="article:modified_time" content="2025-02-27T09:07:06.238Z">
 <meta property="article:author" content="OrlandoFurioso">
 <meta property="article:tag" content="大模型">
 <meta name="twitter:card" content="summary">
@@ -87,7 +88,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
   </ul>
 </nav>
 
@@ -118,6 +119,8 @@
 
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="OrlandoFurioso"
+      src="/uploads/hina1.jpg">
   <p class="site-author-name" itemprop="name">OrlandoFurioso</p>
   <div class="site-description" itemprop="description">记录个人关于网络安全学习，Linux学习相关的一些随笔</div>
 </div>
@@ -128,6 +131,11 @@
           <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
@@ -166,7 +174,7 @@
     <link itemprop="mainEntityOfPage" href="http://orlandofurioso.github.io/2025/02/27/Prompt-engineering%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/uploads/hina1.jpg">
       <meta itemprop="name" content="OrlandoFurioso">
     </span>
 
@@ -192,7 +200,16 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-02-27 15:59:38" itemprop="dateCreated datePublished" datetime="2025-02-27T15:59:38+08:00">2025-02-27</time>
+      <time title="创建时间：2025-02-27 17:07:06" itemprop="dateCreated datePublished" datetime="2025-02-27T17:07:06+08:00">2025-02-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BA%94%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">大模型应用</span></a>
+        </span>
     </span>
 
   
@@ -207,6 +224,8 @@
     <div class="post-body" itemprop="articleBody"><p>Prompt engineering(提示工程)，是调整优化提示词(prompt)，以引导大模型生成预期的回答的一项技术。对于同样的大模型，可以通过利用prompt engineering清晰地描述问题，明确解决问题的步骤，规范回答格式的方式，提高回答的质量。场景不同，分析的问题不同，使用的prompt engineering策略也不尽相同。以下是常见的优化提示词的思路，可供参考</p>
 <h1 id="1-给出清晰的指令"><a href="#1-给出清晰的指令" class="headerlink" title="1.给出清晰的指令"></a>1.给出清晰的指令</h1><h2 id="1-1-询问过程中应当包含问题细节，以获取相关度更高的答案"><a href="#1-1-询问过程中应当包含问题细节，以获取相关度更高的答案" class="headerlink" title="1.1 询问过程中应当包含问题细节，以获取相关度更高的答案"></a>1.1 询问过程中应当包含问题细节，以获取相关度更高的答案</h2><p>若提示词表达不够清楚，则模型会尝试基于已有信息推测用户意图，这可能造成理解上的偏差：</p>
 <p>以下提供几组Prompt对照，以说明给出清晰的指令的重要性：</p>
+<span id="more"></span>
+
 <table>
 <thead>
 <tr>
@@ -333,11 +352,14 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2025/02/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0-%E5%85%B6%E4%B8%80/" rel="prev" title="计算机网络课程笔记(一)">
-                  <i class="fa fa-angle-left"></i> 计算机网络课程笔记(一)
+                <a href="/2025/02/27/Linux%E4%B8%8B%E7%9A%84sockets%E5%AD%A6%E4%B9%A0/" rel="prev" title="Linux下的sockets学习">
+                  <i class="fa fa-angle-left"></i> Linux下的sockets学习
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2025/02/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0-%E5%85%B6%E4%B8%80/" rel="next" title="计算机网络课程笔记(一)">
+                  计算机网络课程笔记(一) <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>
@@ -392,12 +414,16 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
 
   
 
 
 
+  <script src="/js/third-party/fancybox.js"></script>
 
 
 
