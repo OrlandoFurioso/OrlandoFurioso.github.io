@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"orlandofurioso.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":"default","style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Prompt engineering(提示工程)，是调整优化提示词(prompt)，以引导大模型生成预期的回答的一项技术。对于同样的大模型，可以通过利用prompt engineering清晰地描述问题，明确解决问题的步骤，规范回答格式的方式，提高回答的质量。场景不同，分析的问题不同，使用的prompt engineering策略也不尽相同。以下是常见的优化提示词的思路，可供参考 1.给出清晰的指">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Prompt engineering入门学习">
+<meta property="og:url" content="http://orlandofurioso.github.io/2025/02/27/Prompt-engineering%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="OrlandoFurioso的个人博客">
+<meta property="og:description" content="Prompt engineering(提示工程)，是调整优化提示词(prompt)，以引导大模型生成预期的回答的一项技术。对于同样的大模型，可以通过利用prompt engineering清晰地描述问题，明确解决问题的步骤，规范回答格式的方式，提高回答的质量。场景不同，分析的问题不同，使用的prompt engineering策略也不尽相同。以下是常见的优化提示词的思路，可供参考 1.给出清晰的指">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-02-27T07:59:38.395Z">
+<meta property="article:modified_time" content="2025-02-27T07:59:38.395Z">
+<meta property="article:author" content="OrlandoFurioso">
+<meta property="article:tag" content="大模型">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://orlandofurioso.github.io/2025/02/27/Prompt-engineering%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://orlandofurioso.github.io/2025/02/27/Prompt-engineering%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/","path":"2025/02/27/Prompt-engineering入门学习/","title":"Prompt engineering入门学习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Prompt engineering入门学习 | OrlandoFurioso的个人博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">OrlandoFurioso的个人博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">渺渺兮予怀，望美人兮天一方</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E7%BB%99%E5%87%BA%E6%B8%85%E6%99%B0%E7%9A%84%E6%8C%87%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">1.给出清晰的指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E8%AF%A2%E9%97%AE%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%BA%94%E5%BD%93%E5%8C%85%E5%90%AB%E9%97%AE%E9%A2%98%E7%BB%86%E8%8A%82%EF%BC%8C%E4%BB%A5%E8%8E%B7%E5%8F%96%E7%9B%B8%E5%85%B3%E5%BA%A6%E6%9B%B4%E9%AB%98%E7%9A%84%E7%AD%94%E6%A1%88"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 询问过程中应当包含问题细节，以获取相关度更高的答案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E8%AE%A9%E6%A8%A1%E5%9E%8B%E4%BB%A3%E5%85%A5%E7%9B%B8%E5%BA%94%E7%9A%84%E8%A7%92%E8%89%B2"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 让模型代入相应的角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E4%BD%BF%E7%94%A8%E5%88%86%E9%9A%94%E7%AC%A6%E5%A2%9E%E5%BC%BA%E6%96%87%E6%9C%AC%E5%8F%AF%E8%AF%BB%E6%80%A7"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 使用分隔符增强文本可读性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E5%88%86%E8%A7%A3%E5%A4%8D%E6%9D%82%E7%9A%84%E4%BB%BB%E5%8A%A1%EF%BC%8C%E6%8F%90%E4%BE%9B%E5%8F%AF%E8%A1%8C%E7%9A%84%E8%A7%A3%E5%86%B3%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 分解复杂的任务，提供可行的解决步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-%E6%8F%90%E4%BE%9B%E5%85%B7%E4%BD%93%E7%9A%84%E5%8F%82%E8%80%83%E5%AE%9E%E4%BE%8B"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 提供具体的参考实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-6-%E9%99%90%E5%AE%9A%E5%9B%9E%E7%AD%94%E7%9A%84%E9%95%BF%E5%BA%A6"><span class="nav-number">1.6.</span> <span class="nav-text">1.6 限定回答的长度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%8F%90%E4%BE%9B%E5%8F%82%E8%80%83%E6%96%87%E6%9C%AC"><span class="nav-number">2.</span> <span class="nav-text">2.提供参考文本</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E6%8C%87%E7%A4%BA%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%BD%BF%E7%94%A8%E5%8F%82%E8%80%83%E6%96%87%E6%9C%AC%E5%9B%9E%E7%AD%94%E9%97%AE%E9%A2%98"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 指示大模型使用参考文本回答问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E8%A6%81%E6%B1%82%E6%A8%A1%E5%9E%8B%E4%BB%8E%E6%8F%90%E4%BE%9B%E7%9A%84%E5%8F%82%E8%80%83%E6%96%87%E6%9C%AC%E4%B8%AD%E9%80%89%E5%8F%96%E7%9B%B8%E5%BA%94%E5%8F%82%E8%80%83%E6%AE%B5%E8%90%BD%E5%9B%9E%E7%AD%94%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 要求模型从提供的参考文本中选取相应参考段落回答问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%B0%86%E5%A4%8D%E6%9D%82%E7%9A%84%E4%BB%BB%E5%8A%A1%E6%8B%86%E5%88%86%E6%88%90%E6%9B%B4%E7%AE%80%E5%8D%95%E7%9A%84%E5%AD%90%E4%BB%BB%E5%8A%A1"><span class="nav-number">3.</span> <span class="nav-text">3.将复杂的任务拆分成更简单的子任务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E4%BD%BF%E7%94%A8%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB%E6%9D%A5%E7%A1%AE%E5%AE%9A%E4%B8%8E%E7%94%A8%E6%88%B7%E6%9F%A5%E8%AF%A2%E7%9B%B8%E5%85%B3%E7%A8%8B%E5%BA%A6%E6%9C%80%E9%AB%98%E7%9A%84%E6%8C%87%E4%BB%A4"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 使用意图分类来确定与用户查询相关程度最高的指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E5%9C%A8%E9%95%BF%E5%AF%B9%E8%AF%9D%E6%83%85%E6%99%AF%E4%B8%AD%EF%BC%8C%E6%80%BB%E7%BB%93%E6%88%96%E8%BF%87%E6%BB%A4%E4%B9%8B%E5%89%8D%E7%9A%84%E5%AF%B9%E8%AF%9D"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 在长对话情景中，总结或过滤之前的对话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E5%AF%B9%E9%95%BF%E6%96%87%E6%A1%A3%E8%BF%9B%E8%A1%8C%E5%88%86%E6%AE%B5%E6%91%98%E8%A6%81%EF%BC%8C%E5%B9%B6%E9%80%92%E5%BD%92%E5%9C%B0%E6%9E%84%E9%80%A0%E5%AE%8C%E6%95%B4%E6%91%98%E8%A6%81"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 对长文档进行分段摘要，并递归地构造完整摘要</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E7%BB%99%E4%BA%88%E6%A8%A1%E5%9E%8B%E6%80%9D%E8%80%83%E7%9A%84%E6%97%B6%E9%97%B4"><span class="nav-number">4.</span> <span class="nav-text">4.给予模型思考的时间</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E6%8C%87%E7%A4%BA%E6%A8%A1%E5%9E%8B%E5%9C%A8%E6%80%9D%E8%80%83%E5%87%BA%E5%AE%9E%E9%99%85%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E4%B9%8B%E5%89%8D%E4%B8%8D%E8%A6%81%E5%8C%86%E5%8C%86%E7%BB%99%E5%87%BA%E7%BB%93%E8%AE%BA"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 指示模型在思考出实际的解决方案之前不要匆匆给出结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E4%BD%BF%E7%94%A8%E5%86%85%E5%BF%83%E7%8B%AC%E7%99%BD%E6%88%96%E6%98%AF%E4%B8%80%E4%B8%AA%E6%9F%A5%E8%AF%A2%E5%BA%8F%E5%88%97%E6%9D%A5%E9%9A%90%E8%97%8F%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%80%9D%E8%80%83%E8%BF%87%E7%A8%8B"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 使用内心独白或是一个查询序列来隐藏模型的思考过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-%E8%AF%A2%E9%97%AE%E6%A8%A1%E5%9E%8B%E4%B9%8B%E5%89%8D%E6%98%AF%E5%90%A6%E9%81%97%E6%BC%8F%E4%BA%86%E4%BB%BB%E4%BD%95%E5%86%85%E5%AE%B9"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 询问模型之前是否遗漏了任何内容</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E4%BD%BF%E7%94%A8%E5%A4%96%E9%83%A8%E5%B7%A5%E5%85%B7%E8%BE%85%E5%8A%A9%E5%88%A4%E6%96%AD"><span class="nav-number">5.</span> <span class="nav-text">5.使用外部工具辅助判断</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E4%BD%BF%E7%94%A8%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%90%9C%E7%B4%A2%E5%AE%9E%E7%8E%B0%E9%AB%98%E6%95%88%E7%9F%A5%E8%AF%86%E6%A3%80%E7%B4%A2-RAG"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 使用嵌入式搜索实现高效知识检索(RAG)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-%E9%80%9A%E8%BF%87%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81%E6%88%96%E6%98%AF%E8%B0%83%E7%94%A8%E5%A4%96%E9%83%A8%E7%A8%8B%E5%BA%8F%E6%8E%A5%E5%8F%A3%E5%AE%8C%E6%88%90%E7%B2%BE%E7%A1%AE%E8%BF%90%E7%AE%97"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 通过执行代码或是调用外部程序接口完成精确运算</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">OrlandoFurioso</p>
+  <div class="site-description" itemprop="description">记录个人关于网络安全学习，Linux学习相关的一些随笔</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/OrlandoFurioso" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;OrlandoFurioso" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://orlandofurioso.github.io/2025/02/27/Prompt-engineering%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="OrlandoFurioso">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="OrlandoFurioso的个人博客">
+      <meta itemprop="description" content="记录个人关于网络安全学习，Linux学习相关的一些随笔">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Prompt engineering入门学习 | OrlandoFurioso的个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Prompt engineering入门学习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-02-27 15:59:38" itemprop="dateCreated datePublished" datetime="2025-02-27T15:59:38+08:00">2025-02-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Prompt engineering(提示工程)，是调整优化提示词(prompt)，以引导大模型生成预期的回答的一项技术。对于同样的大模型，可以通过利用prompt engineering清晰地描述问题，明确解决问题的步骤，规范回答格式的方式，提高回答的质量。场景不同，分析的问题不同，使用的prompt engineering策略也不尽相同。以下是常见的优化提示词的思路，可供参考</p>
+<h1 id="1-给出清晰的指令"><a href="#1-给出清晰的指令" class="headerlink" title="1.给出清晰的指令"></a>1.给出清晰的指令</h1><h2 id="1-1-询问过程中应当包含问题细节，以获取相关度更高的答案"><a href="#1-1-询问过程中应当包含问题细节，以获取相关度更高的答案" class="headerlink" title="1.1 询问过程中应当包含问题细节，以获取相关度更高的答案"></a>1.1 询问过程中应当包含问题细节，以获取相关度更高的答案</h2><p>若提示词表达不够清楚，则模型会尝试基于已有信息推测用户意图，这可能造成理解上的偏差：</p>
+<p>以下提供几组Prompt对照，以说明给出清晰的指令的重要性：</p>
+<table>
+<thead>
+<tr>
+<th>Worse</th>
+<th>Better</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>谁是美国总统</td>
+<td>2024年的美国总统是谁，总统多久选举一次？</td>
+</tr>
+<tr>
+<td>提供一段计算斐波那契数列的代码</td>
+<td>编写一个基于C++的函数以高效计算斐波那契数列，并提供必要的注释以说明每一部分代码做了什么，为何这样做</td>
+</tr>
+<tr>
+<td>总结会议记录</td>
+<td>用一段文字总结会议记录。随后，用Markdown的形式列出会议中的每一个说话者和他们对应的观点。最后，列出每个说话者提出的下一步计划</td>
+</tr>
+</tbody></table>
+<h2 id="1-2-让模型代入相应的角色"><a href="#1-2-让模型代入相应的角色" class="headerlink" title="1.2 让模型代入相应的角色"></a>1.2 让模型代入相应的角色</h2><p>通过为模型预设对应的角色，能够引导模型深入思考相关领域的知识，从而生成更加符合预期的结果：</p>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">System:</span><br><span class="line">假设你是一名作家，你的写作风格幽默风趣。在写作时，你为我创作的每一段内容中需要至少包含一个笑话或者有趣的点。</span><br><span class="line"></span><br><span class="line">User:</span><br><span class="line">我的大学英语老师Jenny，在我上课时提供了很多帮助，热心地回答了我的疑惑。在我创作毕业论文时，帮助我润色了其中的内容，并修复了语法上的许多错误。在我申请斯坦福大学的研究生时，她为我写了相应的推荐信，帮助我获得了面试的机会。请为我写一封对Jenny老师的感谢信。</span><br></pre></td></tr></table></figure>
+
+<p>(注：系统消息(system message)是用于设定模型的行为、角色和响应方式的消息。它通常在对话开始时就被设定，并在整个对话过程中保持一致，帮助模型明确其角色和工作目标。而用户消息(user message)是用户向模型输入的请求或指令，模型将根据这个消息生成相应的回复。用户消息通常包括明确的任务要求、问题或对话内容。)</p>
+<h2 id="1-3-使用分隔符增强文本可读性"><a href="#1-3-使用分隔符增强文本可读性" class="headerlink" title="1.3 使用分隔符增强文本可读性"></a>1.3 使用分隔符增强文本可读性</h2><p>常用的分隔符（包括三引号<code>&quot;&quot;&quot;</code>, XML标签等），都可以帮助划分需要区别对待的文本部分，帮助大模型快速识别重要信息。</p>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用俳句概括以下内容：</span><br><span class="line">&quot;&quot;&quot;插入文字&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">你将会收到两篇关于相同话题的文章（用XML标签进行了分割）。首先，你需要概括每篇文章的论点，随后，你需要判断这两篇文章中哪一篇的论点更好，并说明原因。</span><br><span class="line">&lt;article&gt; 插入第一篇文章 &lt;/article&gt;</span><br><span class="line">&lt;article&gt; 插入第二篇文章 &lt;/article&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">你将会收到一篇论文的摘要和这篇论文暂定的标题。论文的标题应当在让读者对论文讨论的话题有着明确认识的基础上，做到引人注意。假设当前暂定的标题不符合这一预期，提供5个替代的标题供我参考。</span><br><span class="line"></span><br><span class="line">Abstract: 在此插入摘要</span><br><span class="line">Title: 在此插入标题</span><br></pre></td></tr></table></figure>
+
+<p>对于简单的，容易理解的任务，使用分隔符不会显著提升生成结果的质量。但是在复杂的情景中，使用分隔符能够极大地。</p>
+<h2 id="1-4-分解复杂的任务，提供可行的解决步骤"><a href="#1-4-分解复杂的任务，提供可行的解决步骤" class="headerlink" title="1.4 分解复杂的任务，提供可行的解决步骤"></a>1.4 分解复杂的任务，提供可行的解决步骤</h2><p>复杂的任务往往可以被分解为一系列基本的步骤。通过引导模型一步步地执行这些步骤，可以提高最终生成结果的质量。</p>
+<p>示例:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">System：</span><br><span class="line">请你遵照用户指示，一步步操作，根据用户输入完成操作：</span><br><span class="line"></span><br><span class="line">步骤1: 用户将提供用三括号分割后的文本。在一个句子内概括文本中的内容，句子的前缀为：&quot;总结：&quot;</span><br><span class="line"></span><br><span class="line">步骤2: 将步骤1中的总结翻译为西班牙语，翻译后的结果前面应当加上前缀：&quot;翻译为：&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-5-提供具体的参考实例"><a href="#1-5-提供具体的参考实例" class="headerlink" title="1.5 提供具体的参考实例"></a>1.5 提供具体的参考实例</h2><p>对于某些难以用语言直接加以描述的情景，可以通过提供示例，帮助大模型快速理解问题。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">仿照前文风格进行写作:</span><br><span class="line"></span><br><span class="line">我通过以下句式阐述耐心的概念：</span><br><span class="line">&quot;&quot;&quot;The river that carves the deepest valley flows from a modest spring; the grandest symphony originates from a single note; the most intricate tapestry begins with a solitary thread.&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">请你仿照我提供的句式，用英语对海洋(ocean)的概念进行描述</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-6-限定回答的长度"><a href="#1-6-限定回答的长度" class="headerlink" title="1.6 限定回答的长度"></a>1.6 限定回答的长度</h2><p>可以对模型的回答长度进行一些限制。可以限制的部分包括：句子数，段落数，要点个数等。需要特别说明的是，通常难以让大模型使用限定个数的词进行回答。在限定回答长度时，可以指示大模型使用特定数量的段落或特定次数的要点来尝试回答问题，这样效果比较好。</p>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用50个词左右概括以下文本</span><br><span class="line">&quot;&quot;&quot;text&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">在两个自然段内完成以下内容的概括</span><br><span class="line">&quot;&quot;&quot;text&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">将以下内容概括为三个要点</span><br><span class="line">&quot;&quot;&quot;text&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-提供参考文本"><a href="#2-提供参考文本" class="headerlink" title="2.提供参考文本"></a>2.提供参考文本</h1><h2 id="2-1-指示大模型使用参考文本回答问题"><a href="#2-1-指示大模型使用参考文本回答问题" class="headerlink" title="2.1 指示大模型使用参考文本回答问题"></a>2.1 指示大模型使用参考文本回答问题</h2><p>大模型的训练是一个耗时耗力的过程，其知识更新的速度往往不及真实的环境中信息更新的速度快。如果用户能够向大模型提供与问题相关的，可信的信息，模型将可以调用这些新的外部信息组织答案。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">使用以下提供的两篇文章来回答以下两个问题。假设从文章中不能找到相应答案，则回答&quot;我不能从文中找到答案&quot;</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;文章1&quot;&quot;&quot;</span><br><span class="line">&quot;&quot;&quot;文章2&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">问题：</span><br><span class="line">&lt;question1&gt;问题1&lt;/question1&gt;</span><br><span class="line">&lt;question2&gt;问题2&lt;/question2&gt;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>这样做的问题在于，所有的模型的上下文窗口都是有限的，若需要补充的外部知识很多，则无能为力。此时检索增强生成(Retrieve-augmented generation,RAG)应运而生，可以解决此类问题。其思想是，将外部知识来源(如文本文件等)中的内容进行切片，存入向量数据库中。当构造好相应的prompt传递给大模型时，将自动从关系数据库中寻找出与相关问题语义关联性最高的知识一并传递给大模型，从而增强大模型回答的相关性。此处已经脱离了prompt engineering的范畴，只做简要说明。</p>
+<h2 id="2-2-要求模型从提供的参考文本中选取相应参考段落回答问题"><a href="#2-2-要求模型从提供的参考文本中选取相应参考段落回答问题" class="headerlink" title="2.2 要求模型从提供的参考文本中选取相应参考段落回答问题"></a>2.2 要求模型从提供的参考文本中选取相应参考段落回答问题</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">System：</span><br><span class="line">你将会依照以下文档回答相应问题。</span><br><span class="line">你的任务是：仅使用提供的参考文档回答问题，并在回答问题时附上相应的参考段落。假设文档中的内容不足以回答问题，则直接回答&quot;当前提供的信息不足以回答问题&quot;</span><br><span class="line">注意：当你回答一个问题时，必须附上对应的关于参考文献的引用部分。在引用文献时，使用(&#123;&quot;citation&quot;:...&#125;)的格式输出</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;参考文档&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">问题：</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-将复杂的任务拆分成更简单的子任务"><a href="#3-将复杂的任务拆分成更简单的子任务" class="headerlink" title="3.将复杂的任务拆分成更简单的子任务"></a>3.将复杂的任务拆分成更简单的子任务</h1><h2 id="3-1-使用意图分类来确定与用户查询相关程度最高的指令"><a href="#3-1-使用意图分类来确定与用户查询相关程度最高的指令" class="headerlink" title="3.1 使用意图分类来确定与用户查询相关程度最高的指令"></a>3.1 使用意图分类来确定与用户查询相关程度最高的指令</h2><p>对于需要大量独立指令集来处理不同情况的任务。一个比较好的做法是：首先先分析用户意图，尝试对用户可能的查询类型进行分类，然后针对每个分类完善相应的处理指令。</p>
+<p>在具体的实践中，首先会确定一系列固定的分类，随后，将针对不同分类下不同情况设置相应的处理指令。以上过程可以递归进行，以将一个复杂的任务分解为一个由不同状态组成的序列。</p>
+<p>这种方式类似状态转换图，接受到特定的输入后即跳转到特定的状态，做出特定的回答。其相较于传统分析的优势在于，每次查询仅包含执行任务下一阶段所需的指令。与使用单个查询执行整个任务相比，错误率更低，成本也更低。</p>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">你是一名产品客服，你的工作任务是耐心倾听并回答客人的问题。为了完成任务，你需要将客人的问题进行分类，分类为一级类别和二级类别。最终以JSON格式提供输出结果</span><br><span class="line"></span><br><span class="line">一级类别中包含这些大类：付款，技术支持，账户管理，通用问题</span><br><span class="line"></span><br><span class="line">进一步进行细分，付款大类中包含以下二级类别：</span><br><span class="line"></span><br><span class="line">- 订阅以及取消订阅</span><br><span class="line">- 添加支付方式</span><br><span class="line">- 收款说明</span><br><span class="line">- 对收款提出异议</span><br><span class="line"></span><br><span class="line">技术支持中包含以下二级类别：</span><br><span class="line"></span><br><span class="line">- 问题定位</span><br><span class="line">- 设备适用性</span><br><span class="line">- 软件更新</span><br><span class="line"></span><br><span class="line">帐号管理中包含以下二级类别：</span><br><span class="line"></span><br><span class="line">- 密码重置</span><br><span class="line">- 更新个人信息</span><br><span class="line">- 注销帐号</span><br><span class="line">- 帐号安全</span><br><span class="line"></span><br><span class="line">通用问题中包含以下二级类别：</span><br><span class="line"></span><br><span class="line">- 产品信息</span><br><span class="line">- 价格</span><br><span class="line">- 用户反馈</span><br><span class="line">- 呼叫人工服务</span><br></pre></td></tr></table></figure>
+
+<p>基于上述分类，我们可以定义出一系列更加具体的处理方式并提供给模型。譬如，此时判断用户需要<code>问题定位</code>相关的帮助。进一步细化处理方式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">你将收到在`技术支持`一级类别下关于问题定位的客户服务咨询。你将通过以下方式帮助用户：</span><br><span class="line"></span><br><span class="line">- 首先，你将引导用户检查连接路由器的网线是否松动。需要注意的是，随着时间推移，网线松动属于正常现象。</span><br><span class="line">- 假设所有的网线连接正常且问题继续发生，询问用户使用的路由器版本</span><br><span class="line">- 此时你将建议用户重启路由器，并观察效果，不同的路由器重启方式不一致。</span><br><span class="line">- 假设用户路由器版本为MTD-327J，建议他们按住红色按钮5秒以上以进行重启，并在下次测试连接前等待5分钟</span><br><span class="line">- 假设用户路由器版本为MTD-327S，建议他们重新插拔连接路由器的网线，并在下次测试连接前等待5分钟</span><br><span class="line">- 假设用户在重启路由器并等待5分钟后问题依然持续，通过回复&#123;&quot;IT support requested&quot;&#125;的方式，将当前会话转接到IT支持处。</span><br><span class="line">- 假设用户开始询问与当前话题不相关的问题，则可以确定他们希望终结当前关于问题定位的相关会话。随后，你需要将用户的请求按照以下分类标准进行重新分类。</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;分类标准&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>通过上述的示例分析，我们发现，我们可以通过让模型执行相应指令，来改变当前对话的状态。这允许我们将我们的系统转变为状态机。通过跟踪状态，处理对应状态的指令，以及可能转换到当前状态的状态，我们能够实现精确地跟踪用户需求。<br>以上概念有些类似于Agent智能体，可以根据需要，为大模型”定制”一套其可以调用的函数接口，并引导大模型在适当的时候对其进行调用，从而完成特定情景下的任务</p>
+<h2 id="3-2-在长对话情景中，总结或过滤之前的对话"><a href="#3-2-在长对话情景中，总结或过滤之前的对话" class="headerlink" title="3.2 在长对话情景中，总结或过滤之前的对话"></a>3.2 在长对话情景中，总结或过滤之前的对话</h2><p>由于模型接收文本长度的限制，用户与大模型的对话（整个对话都包含在上下文窗口中）不可能无限期地进行下去。</p>
+<p>(译者注：模型在生成回复时，会将<strong>当前用户输入以及之前的对话内容</strong>（系统消息、用户输入和模型回复）一并作为上下文输入，形成一个连续的对话历史。这意味着只要上下文窗口内仍有空间，模型可以“记住”前文的内容并据此生成与当前对话相关的回复。但如果对话过长，超过上下文窗口限制，最早的内容会被截断，模型将不再能访问这些信息。)</p>
+<p>为了解决长对话的问题，有以下的方案：<br><strong>一是总结先前的对话</strong>。当先前的对话长度超过了预先设定的长度阈值，这将触发一次对先前对话的总结，并生成关于先前对话中的摘要。在实际情况下，先前的对话将在整个会话中异步地在后台进行总结。</p>
+<p><strong>二是动态选取先前对话中与当前话题相关的部分</strong>。详情参见RAG</p>
+<h2 id="3-3-对长文档进行分段摘要，并递归地构造完整摘要"><a href="#3-3-对长文档进行分段摘要，并递归地构造完整摘要" class="headerlink" title="3.3 对长文档进行分段摘要，并递归地构造完整摘要"></a>3.3 对长文档进行分段摘要，并递归地构造完整摘要</h2><p>由于大模型的上下文长度窗口是固定的，因此，<strong>大模型无法对长度长于(上下文长度窗口-生成摘要长度)的文本生成摘要</strong></p>
+<p>因此，为了总结一段非常长的文本，如一整本书。我们可以先对文本进行预处理，分为不同的小节，并引导大模型对每个小节进行概括。随后，每个小节的总结可以拼接起来，传递给大模型，以进一步进行概括，生成关于全文的总结。这一过程可以递归地进行，直到对整个文档完成总结。</p>
+<p>假设为了概括后续部分的内容，需要用到前面的信息。此时还有一个技巧，就是在总结文本中某一部分内容的同时，对该部分先前的内容做一个流水帐式的总结。这对于模型深入理解前后部分之间的关联有着很大的帮助。</p>
+<h1 id="4-给予模型思考的时间"><a href="#4-给予模型思考的时间" class="headerlink" title="4.给予模型思考的时间"></a>4.给予模型思考的时间</h1><h2 id="4-1-指示模型在思考出实际的解决方案之前不要匆匆给出结论"><a href="#4-1-指示模型在思考出实际的解决方案之前不要匆匆给出结论" class="headerlink" title="4.1 指示模型在思考出实际的解决方案之前不要匆匆给出结论"></a>4.1 指示模型在思考出实际的解决方案之前不要匆匆给出结论</h2><p>模型有时会受到外部提问者提问方式的诱导，从而得出具有某种倾向性的结果。此时，为了得到更加准确的结果，我们需要指示模型从问题本身入手，在得出结论前先进行思考，不要急忙下定论。</p>
+<p>反面示例:直接要求大模型给出答案，可能出现问题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">对于以下数学问题，判断以下学生给出的解决方案是否正确:</span><br><span class="line"></span><br><span class="line">问题描述：</span><br><span class="line">我正准备计算建设太阳能电站的开销，请根据以下信息分析：</span><br><span class="line">土地开销为每平方米土地100$</span><br><span class="line">太阳板开销为每平方米250$</span><br><span class="line">维护费用为：在100k$的初始费用的基础上，加收10$每平方米的额外费用</span><br><span class="line">按照平方米计算，运行该电站第一年的总成本是多少？</span><br><span class="line"></span><br><span class="line">学生的答案：</span><br><span class="line">假设该电站占地面积为x平方米</span><br><span class="line">1.土地开销：100x</span><br><span class="line">2.太阳能板开销：250x</span><br><span class="line">3.维护费用：100,000+100x</span><br><span class="line">因此总开销为：100x+250x+100,000+100x=450x+100,000</span><br></pre></td></tr></table></figure>
+
+<p>此时模型可能给出错误的答案。因为先入为主的观念可能会让模型顺着错误的思路思考。</p>
+<p>正面示例:引导大模型理解整个问题后再作答</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">首先，先就以下问题思考出你自己的解决方案。随后，将你自行思考得出的解决方案与以下提供的解决方案进行对比。评估以下解决方案是否正确。不要在你独立思考出以下问题的解决方案前就判断提供的解决方案是否正确</span><br><span class="line"></span><br><span class="line">问题描述：</span><br><span class="line">我正准备计算建设太阳能电站的开销，请根据以下信息分析：</span><br><span class="line">土地开销为每平方米土地100$</span><br><span class="line">太阳板开销为每平方米250$</span><br><span class="line">维护费用为：在100k$的初始费用的基础上，加收10$每平方米的额外费用</span><br><span class="line">按照平方米计算，运行该电站第一年的总成本是多少？</span><br><span class="line"></span><br><span class="line">提供的解决方案：</span><br><span class="line">假设该电站占地面积为x平方米</span><br><span class="line">1.土地开销：100x</span><br><span class="line">2.太阳能板开销：250x</span><br><span class="line">3.维护费用：100,000+100x</span><br><span class="line">因此总开销为：100x+250x+100,000+100x=450x+100,000</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-2-使用内心独白或是一个查询序列来隐藏模型的思考过程"><a href="#4-2-使用内心独白或是一个查询序列来隐藏模型的思考过程" class="headerlink" title="4.2 使用内心独白或是一个查询序列来隐藏模型的思考过程"></a>4.2 使用内心独白或是一个查询序列来隐藏模型的思考过程</h2><p>先前的策略强调，模型在回答特定问题之前，需要对问题进行详细推理。但是在特定的应用场合下，模型推出最终答案的推理过程不适合展示给用户。譬如在线教育场景中，直接显示推理过程相当于把答案告诉学生。</p>
+<p><strong>内心独白是一种解决以上问题的策略</strong>。其思想为：指示模型将应当对用户隐藏的部分输出转化为结构化格式，以便应用端进行解析。随后，应用端在对用户展示输出结果之前，先对输出结果进行解析，只让部分结果可见。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">遵照以下步骤回应用户查询：</span><br><span class="line"></span><br><span class="line">步骤1: 首先自行得出问题的答案。不要依赖任何学生提供的解答进行作答。将你在该步骤中得出的所有结果用三引号(&quot;&quot;&quot;)进行标注</span><br><span class="line"></span><br><span class="line">步骤2: 将你的解答过程与学生的解答过程进行比较，随后评估学生的解答过程是否正确。将你在该步骤中得出的所有结果用三引号(&quot;&quot;&quot;)进行标注。</span><br><span class="line"></span><br><span class="line">步骤3: 假设学生的解答中存在错误，在不直接提供答案给学生的前提下，判断你应该提供给学生何种提示。将你在该步骤中得出的所有结果用三引号(&quot;&quot;&quot;)进行标注。</span><br><span class="line"></span><br><span class="line">步骤4: 假设学生的解答中存在错误，将步骤3中生成的提示提供给学生，(输出时结果不要放在三引号&quot;&quot;&quot;中)，在生成提示的前面加上&quot;提示如下：&quot;的前缀</span><br><span class="line"></span><br><span class="line">问题描述：&lt;插入问题描述&gt;</span><br><span class="line"></span><br><span class="line">学生提供的解答过程:&lt;插入学生提供的解题方法&gt;</span><br></pre></td></tr></table></figure>
+
+<p>除了内心独白，<strong>我们还可以通过一个查询序列实现向用户隐藏关键信息</strong>。此时仅向用户展示最后一个序列输出的结果。</p>
+<p>回到上面的为学生评卷的情景中。首先，我们先要求模型自己解决问题。这样做的好处是，模型的解法不会因为参考了学生的解法而被带偏。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">问题描述：&lt;插入问题描述&gt;</span><br></pre></td></tr></table></figure>
+
+<p>接下来，我们可以指示模型判断学生解法的正确性：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">将你前面对于该问题的解法与以下提供的学生的解法进行对比，并评估学生的做法是否正确：</span><br><span class="line"></span><br><span class="line">问题描述：&quot;&quot;&quot;&lt;插入问题描述&gt;&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">你的解决方法：&quot;&quot;&quot;&lt;插入前文中生成的解决方法&gt;&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">学生的解决方法：&quot;&quot;&quot;&lt;插入学生的解决方法&gt;&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>最终，我们可以指示模型通过自己的分析，以一个乐于助人的辅导员的角色来构建一个回复。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">你是一名数学辅导员。如果学生出错了，以不透露答案的方式向学生提供提示。如果学生没有出错，只需给他们一个鼓励性的评论。</span><br><span class="line"></span><br><span class="line">问题陈述： &quot;&quot;&quot;&lt;插入问题陈述&gt;&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">你的解决方案: &quot;&quot;&quot;&lt;插入模型生成的解决方案&gt;&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">学生的解决方案： &quot;&quot;&quot;&lt;插入学生的解决方案&gt;&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">分析： &quot;&quot;&quot;&lt;插入上一步生成的模型分析&gt;&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-3-询问模型之前是否遗漏了任何内容"><a href="#4-3-询问模型之前是否遗漏了任何内容" class="headerlink" title="4.3 询问模型之前是否遗漏了任何内容"></a>4.3 询问模型之前是否遗漏了任何内容</h2><p>假设这样的情景：我们正在使用一个模型来列出与特定问题相关的信息源片段。在列出每个片段后，模型需要确定是否应该开始编写另一个片段，还是应该停止编写。如果源文件很大，模型很容易过早停止工作，无法列出所有相关片段。在这种情况下，通常可以提示模型在后续查询中搜索之前遗漏的片段，从而提高输出的质量。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">你将会接收一个用三引号(&quot;&quot;&quot;)分割的文档。你的任务是：选择与以下问题相关的片段：“人工智能历史上发生了哪些重大的范式转变。</span><br><span class="line"></span><br><span class="line">确保片段内容包含解释这些内容所需的所有相关上下文。换句话说，就是不要摘录缺少重要上下文的小片段。请你将结果按照JSON格式，参照以下的方式输出：</span><br><span class="line"></span><br><span class="line">[&#123;&quot;片段1&quot;:&quot;...&#125;,</span><br><span class="line">...</span><br><span class="line">&#123;&quot;片段n&quot;:&quot;...&quot;&#125;]</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;&lt;在此处插入文档&gt;&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>随后，在必要的时候提示模型：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">还有更多相关片段吗？注意不要提供重复片段。还要确保片段内容包含解读相关内容所需的所有相关上下文，换句话说，不要提供缺少重要上下文的小片段。</span><br></pre></td></tr></table></figure>
+
+<h1 id="5-使用外部工具辅助判断"><a href="#5-使用外部工具辅助判断" class="headerlink" title="5.使用外部工具辅助判断"></a>5.使用外部工具辅助判断</h1><h2 id="5-1-使用嵌入式搜索实现高效知识检索-RAG"><a href="#5-1-使用嵌入式搜索实现高效知识检索-RAG" class="headerlink" title="5.1 使用嵌入式搜索实现高效知识检索(RAG)"></a>5.1 使用嵌入式搜索实现高效知识检索(RAG)</h2><p>模型可以利用作为输入的一部分所提供的外部信息源，以生成相关性更强且更新的回应。例如，如果用户询问有关特定电影的问题，则将有关电影的高质量信息（例如演员、导演等）添加到模型的输入中可能会很有用。嵌入可用于实现高效的知识检索，从而可以在运行时动态地将相关信息添加到模型输入中。</p>
+<p>RAG通过计算文本的向量相似度，从而评估向量数据库中文本的语义相关性，进而决定取出哪些文本。需要注意的是，RAG是一种较为取巧的方式，向量相似度高的两组文本未必在语义上一定相关。因此在实践中，RAG会取出前k个最相关的结果(topK)，这样无疑会影响效率</p>
+<h2 id="5-2-通过执行代码或是调用外部程序接口完成精确运算"><a href="#5-2-通过执行代码或是调用外部程序接口完成精确运算" class="headerlink" title="5.2 通过执行代码或是调用外部程序接口完成精确运算"></a>5.2 通过执行代码或是调用外部程序接口完成精确运算</h2><p>大语言模型在执行算术或者长计算时是不可靠的。在需要的情况下，可以指示模型编写和运行代码，而不是自行进行计算。实践中，可以指示模型将要运行的代码以指定的格式输出，例如三重反引号(```)。产生输出后，可以提取并运行代码。最后，如有必要，可以将代码执行引擎（即 Python 解释器）的输出作为下一个查询的模型的输入。</p>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">你可以编写并运行一段Python代码以解答以下数学问题，python代码应当用三重反括号(如```代码如下```)进行分隔。</span><br><span class="line"></span><br><span class="line">计算以下多项式的所有实根：3*x**5 - 5*x**4 - 3*x**3 - 7*x - 10.</span><br></pre></td></tr></table></figure>
+
+<p>代码执行的另一个很好的用例是调用外部 API。通过指导模型正确调用 API，大模型将编写调用外部API的代码。还可以通过向模型提供 API 相关的文档或代码示例，指导模型更好地理解 API的使用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">你可以编写并运行一段Python代码以解答以下数学问题。同时在必要时，你可以访问通信模块并调用相应通信函数，该通信模块的主要功能是帮助用户发送信息给朋友。</span><br><span class="line"></span><br><span class="line">示例如下：</span><br><span class="line">```python</span><br><span class="line">import message</span><br><span class="line">message.write(to=&quot;John&quot;, message=&quot;Hey, want to meetup after work?&quot;) ```</span><br></pre></td></tr></table></figure>
+
+<p><strong>值得注意的是，执行大模型提供的代码会存在安全问题，尤其是在调用外部API时。为了减小可能的损失，最好在沙盒环境内执行大模型生成的代码</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" rel="tag"># 大模型</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/02/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0-%E5%85%B6%E4%B8%80/" rel="prev" title="计算机网络课程笔记(一)">
+                  <i class="fa fa-angle-left"></i> 计算机网络课程笔记(一)
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">OrlandoFurioso</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/OrlandoFurioso" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
