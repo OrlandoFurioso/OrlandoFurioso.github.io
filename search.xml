@@ -518,8 +518,7 @@
 <li>在英伟达官网上下载对应的驱动文件(后缀为<code>.run</code>)，手动安装相应驱动。</li>
 </ol>
 <p>通过 <code>apt</code> 包管理攻击管理驱动方便后续更新维护；若手动下载安装驱动，则后续更新内核后，需要手动更新相应驱动文件。</p>
-<hr>
-<h2 id="三，通过官方驱动文件安装驱动"><a href="#三，通过官方驱动文件安装驱动" class="headerlink" title="三，通过官方驱动文件安装驱动"></a>三，通过官方驱动文件安装驱动</h2><p>首先简单说明如何通过后者，即从官网下载驱动文件安装驱动。<a href="https://www.nvidia.cn/drivers/lookup/">英伟达驱动下载地址</a></p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><span id="more"></span></h2><h2 id="三，通过官方驱动文件安装驱动"><a href="#三，通过官方驱动文件安装驱动" class="headerlink" title="三，通过官方驱动文件安装驱动"></a>三，通过官方驱动文件安装驱动</h2><p>首先简单说明如何通过后者，即从官网下载驱动文件安装驱动。<a href="https://www.nvidia.cn/drivers/lookup/">英伟达驱动下载地址</a></p>
 <p>假设已经下载好了对应的驱动文件：</p>
 <ol>
 <li>若先前通过 <code>apt</code> 安装过nvidia驱动，则首先需要移除已有的全部驱动文件</li>
